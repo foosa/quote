@@ -1,0 +1,134 @@
+<?php
+
+function quote_menu() {
+  $items = array();
+  $items['quote'] = array(
+    'title' => 'Request a Quote',
+    'description' => '',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('quote_form'),
+    'access callback' => TRUE
+  );
+
+  return $items;
+}
+
+function quote_form($form, &$form_state) {
+  $form['first_name'] = array(
+    '#type' => 'textfield',
+    '#title' => 'First Name',
+    '#size' => 32,
+    '#maxlength' => 32,
+    '#required' => TRUE,
+  );
+
+  $form['last_name'] = array(
+    '#type' => 'textfield',
+    '#title' => 'Last Name',
+    '#size' => 32,
+    '#maxlength' => 32,
+    '#required' => TRUE,
+  );
+
+  $form['company'] = array(
+    '#type' => 'textfield',
+    '#title' => 'Company',
+    '#size' => 32,
+    '#maxlength' => 64,
+    '#required' => FALSE,
+  );
+
+  $form['email'] = array(
+    '#type' => 'textfield',
+    '#title' => 'Email',
+    '#size' => 32,
+    '#maxlength' => 64,
+    '#required' => TRUE,
+  );
+
+  $form['phone'] = array(
+    '#type' => 'textfield',
+    '#title' => 'Phone',
+    '#size' => 32,
+    '#maxlength' => 14,
+    '#required' => TRUE,
+  );
+
+  $form['request'] = array(
+    '#type' => 'textarea',
+    '#title' => 'Request',
+    '#required' => TRUE,
+    '#description' => 'Please provide all the information needed for a quote.',
+ );
+
+  $form['submit_button'] = array(
+    '#type' => 'submit',
+    '#value' => t('Request Quote'),
+  );
+
+  return $form;
+}
+
+function quote_form_validate($form, &$form_state) {
+  
+  // Assume TRUE until proven false
+  $valid = TRUE;
+
+  // Validate email
+  $email = $form_state['values']['email'];
+  if (!valid_email_address($email)) {
+    form_set_error('email', t('Your email address appears to be invalid'));
+    $valid = FALSE;
+  }
+
+  // Validate phone
+  $phone = $form_state['values']['phone'];
+  $phone = preg_replace('/\D+/', '', $phone);
+  if (strlen($phone) == 9 && !preg_match('/^[0-9]{9}$/', $phone)) {
+    form_set_error('phone', t('Phone number must have nine digits (including area code).'));
+    $valid = FALSE;
+  }
+
+  // Inform user that request was submitted
+  if ($valid == TRUE) {
+    drupal_set_message('Your request was submitted');
+  }
+}
+
+function quote_form_mail($key, &$message, $params) {
+
+  $headers = array(
+    'MIME-Version' => '1.0',
+    'Content-Type' => 'text/html; charset=UTF-8;',
+    'Content-Transfer-Encoding' => '8Bit',
+    'X-Mailer' => 'Drupal'
+  );
+
+  foreach ($headers as $key => $value) {
+    $message['headers'][$key] = $value;
+  }
+
+  $message['subject'] = $params['subject'];
+  $message['body'] = $params['body'];
+  dpm($message);
+}
+
+function quote_form_submit($form, &$form_state) {
+  
+  // Send user a confirmation email
+  $email = $form_state['values']['email'];
+  $name = ''.$form_state['values']['first_name'].' '.$form_state['values']['last_name'];
+  $phone = $form_state['values']['phone'];
+  $from = 'noreply@petrochemmetals.com';
+  $body[] = 'Test';  
+// $body[] = 'We are working on your Request for Quote.\n\r\n\rRequestor: '.$name .'\n\rEmail: '.$email.'\n\rPhone: '.$phone;
+
+  $params = array(
+    'body' => $body,
+    'subject' => 'Petrochem Metals Request for Quote Confirmation'
+  );
+  drupal_mail('quote_form', 'notice', $email, language_default(), $params, $from);
+
+}
+
+?>

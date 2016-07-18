@@ -1,0 +1,3 @@
+core = "7.x"
+description = "Quote system for Petrochem Metals"
+name = "Petrochem Metals Quote"

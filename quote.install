@@ -2,52 +2,52 @@
 
 function quote_schema() {
   $schema['quote_requests'] = array(
-	  'description' => 'Table storing quote requests for Petrochem Metals',
-	  'fields' => array(
-	    'id' => array(
-	      'description' => 'Quote ID',
-	      'type' => 'int',
-	      'unsigned' => TRUE,
-	      'not null' => TRUE,
+    'description' => 'Table storing quote requests for Petrochem Metals',
+    'fields' => array(
+      'id' => array(
+        'description' => 'Quote ID',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
         'default' => 0),
-	    'first_name' => array(
-	      'description' => 'Client first name',
-	      'type' => 'varchar',
-	      'length' => 32,
-	      'not null' => TRUE,
-	      'default' => ''),
-	    'last_name' => array(
-	      'description' => 'Client last name',
-	      'type' => 'varchar',
-	      'length' => 32,
-	      'not null' => TRUE,
-	      'default' => ''),
-	    'company' => array(
-	      'description' => 'Client company',
-	      'type' => 'varchar',
-	      'length' => 64,
-	      'default' => ''),
-	    'email' => array(
-	      'description' => 'Client email',
-	      'type' => 'varchar',
-	      'length' => 64,
-	      'not null' => TRUE,
-	      'default' => ''),
-	    'phone' => array(
-	      'description' => 'Client phone number',
-	      'type' => 'varchar',
-	      'length' => 10,
-	      'not null' => TRUE,
-	      'default' => ''),
-	    'request' => array(
-	      'description' => 'Client first name',
-	      'type' => 'varchar',
-	      'length' => 4096,
-	      'not null' => TRUE,
-	      'default' => ''),
-	  ),
-	  'unique keys' => array(array('id')),
-	  'primary key' => array('id'),
+      'first_name' => array(
+        'description' => 'Client first name',
+        'type' => 'varchar',
+        'length' => 32,
+        'not null' => TRUE,
+        'default' => ''),
+      'last_name' => array(
+        'description' => 'Client last name',
+        'type' => 'varchar',
+        'length' => 32,
+        'not null' => TRUE,
+        'default' => ''),
+      'company' => array(
+        'description' => 'Client company',
+        'type' => 'varchar',
+        'length' => 64,
+        'default' => ''),
+      'email' => array(
+        'description' => 'Client email',
+        'type' => 'varchar',
+        'length' => 64,
+        'not null' => TRUE,
+        'default' => ''),
+      'phone' => array(
+        'description' => 'Client phone number',
+        'type' => 'varchar',
+        'length' => 10,
+        'not null' => TRUE,
+        'default' => ''),
+      'request' => array(
+        'description' => 'Client first name',
+        'type' => 'varchar',
+        'length' => 4096,
+        'not null' => TRUE,
+        'default' => ''),
+    ),
+    'unique keys' => array(array('id')),
+    'primary key' => array('id'),
   );
 
   return $schema;
@@ -55,13 +55,13 @@ function quote_schema() {
 
 
 function quote_install() {
-	dpm('quote_install called');
-	drupal_install_schema('quote');
+  dpm('quote_install called');
+  drupal_install_schema('quote');
 }
 
 
 function quote_uninstall() {
-	dpm('quote uninstall called');
-	drupal_uninstall_schema('quote');
+  dpm('quote uninstall called');
+  drupal_uninstall_schema('quote');
 }
 

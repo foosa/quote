@@ -6,10 +6,9 @@ function quote_schema() {
     'fields' => array(
       'id' => array(
         'description' => 'Quote ID',
-        'type' => 'int',
+        'type' => 'serial',
         'unsigned' => TRUE,
-        'not null' => TRUE,
-        'default' => 0),
+        'not null' => TRUE),
       'first_name' => array(
         'description' => 'Client first name',
         'type' => 'varchar',
@@ -56,7 +55,7 @@ function quote_schema() {
 
 function quote_install() {
   dpm('quote_install called');
-  drupal_install_schema('quote');
+  //drupal_install_schema('quote');
 }
 
 

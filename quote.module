@@ -109,6 +109,9 @@ function quote_form_validate($form, &$form_state) {
     form_set_error('phone', t('Phone number must have nine digits (including area code).'));
     $valid = FALSE;
   }
+  else {
+    $form_state['values']['phone'] = $phone;
+  }
 
   // Inform user that request was submitted
   if ($valid == TRUE) {
